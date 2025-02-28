@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 09:54:45 by calleaum          #+#    #+#             */
-/*   Updated: 2025/02/26 15:38:02 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:06:57 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,32 @@ t_env	*init_env(char **envp)
 	return (env);
 }
 
-// Fonction pour obtenir la valeur d'une variable d'environnement
-char	*get_env_value(t_env *env, const char *name)
-{
-	int		i;
-	size_t	name_len;
 
-	if (!env || !name)
-		return (NULL);
-	name_len = ft_strlen(name);
-	i = 0;
-	while (env->env_vars[i])
-	{
-		if (ft_strncmp(env->env_vars[i], name, name_len) == 0
-			&& env->env_vars[i][name_len] == '=')
-			return (env->env_vars[i] + name_len + 1);
-		i++;
-	}
-	return (NULL);
+// Fonction pour obtenir la valeur d'une variable d'environnement
+char *get_env_value(t_env *env, const char *name)
+{
+    int     i;
+    size_t  name_len;
+    char    *env_var;
+    char    *equals_sign;
+
+    if (!env || !name || !env->env_vars)
+        return (NULL);
+    name_len = ft_strlen(name);
+    i = 0;
+    while (i < env->count && env->env_vars[i])
+    {
+        env_var = env->env_vars[i];
+        equals_sign = ft_strchr(env_var, '=');
+        
+        if (equals_sign && 
+            (size_t)(equals_sign - env_var) == name_len &&
+            ft_strncmp(env_var, name, name_len) == 0)
+            return (equals_sign + 1);
+        
+        i++;
+    }
+    return (NULL);
 }
 
 // Fonction pour mettre à jour une variable d'environnement
@@ -115,26 +123,23 @@ char	*expand_env_variable(char *str, int *i, t_expand *exp, t_env *env)
 
 char *process_dollar_sign(char *str, int *i, t_expand *exp, t_expand_data *data)
 {
-    char *temp;
-
+    
     (*i)++;
     if (str[*i] == '?')
     {
-        temp = expand_exit_status(exp, data->last_exit_status);
+        if (!expand_exit_status(exp, data->last_exit_status))
+            return (NULL);
         (*i)++;
     }
+    else if (ft_isalpha(str[*i]) || str[*i] == '_')
+    {
+        char *var_name = ft_substr(str, *i, ft_varlen(str + *i));
+        free(var_name);
+        if (!expand_env_variable(str, i, exp, data->env))
+            return (NULL);
+    }
     else
-    {
-        temp = expand_env_variable(str, i, exp, data->env);
-    }
-    if (!temp)
-    {
-        return NULL;
-    }
-    size_t len = strlen(temp);
-    ft_strncat(exp->expanded, temp, len);
-	exp->j += len;
-    free(temp);
-    return exp->expanded;
+        exp->expanded[exp->j++] = '$';
+    return (exp->expanded);
 }
 

@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:42:36 by lgrisel           #+#    #+#             */
-/*   Updated: 2025/02/26 15:42:42 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:18:53 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,46 +17,28 @@ void clean(t_mini *mini)
     int i = 0;
     
     if (mini->str)
-	{
+    {
         free(mini->str);
         mini->str = NULL;
     }
     if (mini->args)
-	{
+    {
         while (mini->args[i])
-		{
+        {
             free(mini->args[i]);
-			mini->args[i] = NULL;
+            mini->args[i] = NULL;
             i++;
         }
         free(mini->args);
         mini->args = NULL;
     }
     if (mini->tokens)
-	{
+    {
         free_list(mini->tokens);
         mini->tokens = NULL;
     }
-    if (mini->env) {
-        i = 0;
-        if (mini->env->env_vars)
-		{
-            while (i < mini->env->count)
-			{
-                if (mini->env->env_vars[i])
-				{
-                    free(mini->env->env_vars[i]);
-                    mini->env->env_vars[i] = NULL;
-                }
-                i++;
-            }
-            free(mini->env->env_vars);
-            mini->env->env_vars = NULL;
-        }
-        free(mini->env);
-        mini->env = NULL;
-    }
 }
+
 
 
 void initialize_mini(t_mini *mini, char **env)
@@ -70,6 +52,8 @@ void initialize_mini(t_mini *mini, char **env)
     mini->in_word = 0;
     mini->quote = 0;
     mini->env = init_env(env);
+	if (mini->env)
+		init_shell_vars(mini->env);
 }
 
 void final_cleanup(t_mini *mini)
@@ -136,7 +120,7 @@ int main(int ac, char **av, char **env)
     t_node  *list;
     
     setup_signals();
-    initialize_mini(&mini, env); // Initialiser avec les variables d'environnement
+    initialize_mini(&mini, env);
     
     if (ac != 1 && av && env)
         return (printf("No arguments needed\n"), 1);
@@ -163,5 +147,6 @@ int main(int ac, char **av, char **env)
     }
     
     clean(&mini);
+	final_cleanup(&mini);
     return (0);
 }

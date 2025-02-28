@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:45:27 by lgrisel           #+#    #+#             */
-/*   Updated: 2025/02/26 11:04:42 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:42:24 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ typedef struct s_mini
 	t_env	*env;
 }	t_mini;
 
+int add_env_value(t_env *env, const char *name, const char *value);
+int update_pwd(t_env *env);
+int init_shell_vars(t_env *env);
+
 void initialize_env(t_env *env);
 void initialize_expand(t_expand *expand);
 void initialize_expand_data(t_expand_data *data, t_env *env);
@@ -80,7 +84,6 @@ char *ft_strjoin3(const char *s1, const char *s2, const char *s3);
 t_env *init_env(char **envp);
 void final_cleanup(t_mini *mini);
 void    ft_echo(char *str);
-void    change_directory(t_mini *mini);
 void    ft_exit(t_mini *mini, t_node *list);
 void initialize_mini(t_mini *mini, char **env);
 char *ft_strcpy2(char *dest, const char *src);
@@ -126,7 +129,7 @@ void	setup_signals(void);
 
 /// @brief Changes the current directory and updates PWD
 /// @param mini Structure containing the minishell information
-// void	change_directory(t_mini *mini);
+int	change_directory(t_mini *mini);
 
 // exit //
 
