@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:06:09 by lgrisel           #+#    #+#             */
-/*   Updated: 2025/03/03 10:07:36 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:08:10 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_exit(t_mini *mini, t_node *list)
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 		clean(mini);
+		final_cleanup(mini);
 		free_list(list);
 		exit(1);
 	}
@@ -29,6 +30,7 @@ void	ft_exit(t_mini *mini, t_node *list)
 		ft_putstr_fd(mini->args[1], 2);
 		ft_putendl_fd(": numeric argument required", 2);
 		clean(mini);
+		final_cleanup(mini);
 		free_list(list);
 		exit(2);
 	}

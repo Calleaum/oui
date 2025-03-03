@@ -12,7 +12,8 @@ SRC =	minishell.c \
 		free.c \
 		init.c \
 		parsing/env3.c \
-		parsing/dollar.c
+		parsing/dollar.c \
+		builtin/ft_pwd.c
 
 NAME = minishell
 OBJ = $(SRC:.c=.o)

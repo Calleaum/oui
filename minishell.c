@@ -6,56 +6,11 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:42:36 by lgrisel           #+#    #+#             */
-/*   Updated: 2025/03/03 10:14:31 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:51:07 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	clean(t_mini *mini)
-{
-	int	i;
-
-	i = 0;
-	if (mini->str)
-	{
-		free(mini->str);
-		mini->str = NULL;
-	}
-	if (mini->args)
-	{
-		while (mini->args[i])
-		{
-			free(mini->args[i]);
-			mini->args[i] = NULL;
-			i++;
-		}
-		free(mini->args);
-		mini->args = NULL;
-	}
-	if (mini->tokens)
-	{
-		free_list(mini->tokens);
-		mini->tokens = NULL;
-	}
-}
-
-void	final_cleanup(t_mini *mini)
-{
-	int	i;
-
-	if (mini->env)
-	{
-		i = 0;
-		while (i < mini->env->count)
-		{
-			free(mini->env->env_vars[i]);
-			i++;
-		}
-		free(mini->env->env_vars);
-		free(mini->env);
-	}
-}
 
 void	handle_command(t_mini *mini, t_node *list)
 {
@@ -74,11 +29,12 @@ void	handle_command(t_mini *mini, t_node *list)
 		ft_echo(expanded_str);
 		free(expanded_str);
 	}
+	else if (ft_strncmp(mini->str, "pwd", 3) == 0
+		&& (mini->str[3] == ' ' || mini->str[3] == '\0'))
+		ft_pwd();
 	else if (ft_strncmp(mini->str, "cd", 2) == 0
 		&& (mini->str[2] == ' ' || mini->str[2] == '\0'))
-	{
 		change_directory(mini);
-	}
 	else
 	{
 		printf("%s: command not found\n", mini->args[0]);

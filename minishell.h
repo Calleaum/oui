@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:45:27 by lgrisel           #+#    #+#             */
-/*   Updated: 2025/02/28 14:42:24 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:41:01 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct s_mini
 	char	quote;
 	t_env	*env;
 }	t_mini;
+
+int	ft_pwd(void);
 
 int add_env_value(t_env *env, const char *name, const char *value);
 int update_pwd(t_env *env);
