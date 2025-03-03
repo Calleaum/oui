@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 12:54:25 by calleaum          #+#    #+#             */
-/*   Updated: 2025/02/26 14:47:25 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:05:01 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,36 +79,3 @@ void	ft_echo(char *str)
 	if (newline)
 		write(1, "\n", 1);
 }
-
-// void ft_echo(char *str) {
-//     int i;
-//     int newline;
-//     int len;
-    
-//     len = ft_strlen(str);
-//     newline = 1;
-    
-//     // Commencer à l'index après "echo "
-//     i = 5;
-    
-//     // Vérifier que la chaîne est assez longue avant d'accéder à str[i]
-//     if (len > 5 && str[i] == '-' && str[i + 1] == 'n' && (str[i + 2] == ' ' || str[i + 2] == '\0')) {
-//         newline = 0;
-//         i += 3;
-//         while (i < len && str[i] == ' ')
-//             i++;
-//     } else if (len >= 5) {
-//         // Si la chaîne est assez longue mais pas d'option -n
-//         while (i < len && str[i] == ' ')
-//             i++;
-//     }
-    
-//     // Afficher le reste de la chaîne
-//     while (i < len && str[i]) {
-//         write(1, &str[i], 1);
-//         i++;
-//     }
-    
-//     if (newline)
-//         write(1, "\n", 1);
-// }

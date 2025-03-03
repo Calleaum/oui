@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:06:09 by lgrisel           #+#    #+#             */
-/*   Updated: 2025/02/28 16:11:46 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/03/03 10:07:36 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void	ft_exit(t_mini *mini, t_node *list)
 	clean(mini);
 	final_cleanup(mini);
 	free_list(list);
+	rl_clear_history();
 	exit(i);
 }

@@ -10,7 +10,9 @@ SRC =	minishell.c \
 		list.c \
 		builtin/ft_ctrl.c \
 		free.c \
-		init.c
+		init.c \
+		parsing/env3.c \
+		parsing/dollar.c
 
 NAME = minishell
 OBJ = $(SRC:.c=.o)
