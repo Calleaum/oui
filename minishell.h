@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:45:27 by lgrisel           #+#    #+#             */
-/*   Updated: 2025/03/03 11:41:01 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:23:38 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_env
 {
     char    **env_vars;
     int     count;
+	int     last_exit_status;
 } t_env;
 
 typedef struct s_expand
@@ -34,12 +35,6 @@ typedef struct s_expand
 	char	*expanded;
 	int		j;
 }	t_expand;
-
-typedef struct s_expand_data
-{
-    int     last_exit_status;
-    t_env   *env;
-} t_expand_data;
 
 // Linked list structure
 typedef struct s_node {
@@ -71,7 +66,7 @@ int init_shell_vars(t_env *env);
 
 void initialize_env(t_env *env);
 void initialize_expand(t_expand *expand);
-void initialize_expand_data(t_expand_data *data, t_env *env);
+// void initialize_expand_data(t_env *env, t_env *env);
 void initialize_node(t_node *node);
 void initialize_minix(t_mini *mini, t_env *env);
 
@@ -94,7 +89,7 @@ size_t  handle_dollar(char *str, int *i, int last_exit_status, t_env *env);
 size_t  calculate_expanded_size(char *str, int last_exit_status, t_env *env);
 char    *expand_exit_status(t_expand *exp, int last_exit_status);
 char    *expand_env_variable(char *str, int *i, t_expand *exp, t_env *env);
-char *process_dollar_sign(char *str, int *i, t_expand *exp, t_expand_data *data);
+char *process_dollar_sign(char *str, int *i, t_expand *exp, t_env *env);
 char *expand_variables(char *str, int last_exit_status, t_env *env);
 
 // Define token types

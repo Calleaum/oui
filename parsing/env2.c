@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 18:16:06 by calleaum          #+#    #+#             */
-/*   Updated: 2025/03/03 09:38:05 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:22:53 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 char	*expand_variables(char *str, int last_exit_status, t_env *env)
 {
 	t_expand		exp;
-	t_expand_data	data;
 	int				i;
 
 	if (!str)
 		return (NULL);
-	data.last_exit_status = last_exit_status;
-	data.env = env;
+	env->last_exit_status = last_exit_status;
+	env = env;
 	exp.expanded = malloc(calculate_expanded_size(str, last_exit_status, env));
 	if (!exp.expanded)
 		return (NULL);
@@ -30,7 +29,7 @@ char	*expand_variables(char *str, int last_exit_status, t_env *env)
 	while (str[i])
 	{
 		if (str[i] == '$')
-			exp.expanded = process_dollar_sign(str, &i, &exp, &data);
+			exp.expanded = process_dollar_sign(str, &i, &exp, env);
 		else
 			exp.expanded[exp.j++] = str[i++];
 	}

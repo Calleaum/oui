@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:22:13 by calleaum          #+#    #+#             */
-/*   Updated: 2025/03/03 11:45:05 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:27:34 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,57 +57,29 @@ void	final_cleanup(t_mini *mini)
 	}
 }
 
-void free_env_vars(char **env_vars, int index)
+void	free_env_vars(char **env_vars, int index)
 {
-    if (env_vars[index] != NULL)
+	if (env_vars[index] != NULL)
 	{
-        free(env_vars[index]);
-        free_env_vars(env_vars, index + 1);
-    }
+		free(env_vars[index]);
+		free_env_vars(env_vars, index + 1);
+	}
 }
 
-void free_env(t_env *env)
+void	free_env(t_env *env)
 {
-    if (!env)
-        return;
-    free_env_vars(env->env_vars, 0);
-    free(env->env_vars);
-    free(env);
+	if (!env)
+		return ;
+	free_env_vars(env->env_vars, 0);
+	free(env->env_vars);
+	free(env);
 }
 
-void free_expand(t_expand *exp)
+void	free_tokens(t_node *tokens)
 {
-    if (!exp)
-        return;
-    free(exp->expanded);
-}
-
-void free_tokens(t_node *tokens)
-{
-    if (!tokens)
-        return;
-    free_tokens(tokens->next); 
-    free(tokens->content);
-    free(tokens);
-}
-
-void free_mini(t_mini *mini)
-{
-    if (!mini)
-        return;
-    free(mini->str);
-    free(mini->tmpstr);
-    if (mini->args)
-    {
-        int index = 0;
-        while (mini->args[index] != NULL)
-        {
-            free(mini->args[index]);
-            index++;
-        }
-        free(mini->args);
-    }
-    free_tokens(mini->tokens);
-    free_env(mini->env);
-    free(mini);
+	if (!tokens)
+		return ;
+	free_tokens(tokens->next);
+	free(tokens->content);
+	free(tokens);
 }

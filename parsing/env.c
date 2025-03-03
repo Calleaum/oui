@@ -6,7 +6,7 @@
 /*   By: calleaum <calleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 09:54:45 by calleaum          #+#    #+#             */
-/*   Updated: 2025/03/03 11:41:31 by calleaum         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:19:58 by calleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,14 @@ char	*expand_env_variable(char *str, int *i, t_expand *exp, t_env *env)
 }
 
 char	*process_dollar_sign(char *str, int *i, t_expand *exp,
-		t_expand_data *data)
+		t_env *env)
 {
 	char	*var_name;
 
 	(*i)++;
 	if (str[*i] == '?')
 	{
-		if (!expand_exit_status(exp, data->last_exit_status))
+		if (!expand_exit_status(exp, env->last_exit_status))
 			return (NULL);
 		(*i)++;
 	}
@@ -125,7 +125,7 @@ char	*process_dollar_sign(char *str, int *i, t_expand *exp,
 	{
 		var_name = ft_substr(str, *i, ft_varlen(str + *i));
 		free(var_name);
-		if (!expand_env_variable(str, i, exp, data->env))
+		if (!expand_env_variable(str, i, exp, env))
 			return (NULL);
 	}
 	else
